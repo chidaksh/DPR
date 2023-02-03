@@ -153,6 +153,36 @@ class JsonlQASrc(QASrc):
                 data.append(QASample(self._process_question(question), id, answers))
         self.data = data
 
+class JsonQASrc(QASrc):
+    def __init__(
+        self,
+        file: str,
+        selector: DictConfig = None,
+        question_attr: str = "question",
+        answers_attr: str = "answers",
+        id_attr: str = "id",
+        special_query_token: str = None,
+        query_special_suffix: str = None,
+    ):
+        super().__init__(file, selector, special_query_token, query_special_suffix)
+        self.question_attr = question_attr
+        self.answers_attr = answers_attr
+        self.id_attr = id_attr
+
+    def load_data(self):
+        super().load_data()
+        data = []
+        with open(self.file, mode="r") as jsonl_reader:
+            jobj = json.load(jsonl_reader)
+            for jline in jobj:
+                question = jline[self.question_attr]
+                answers = jline[self.answers_attr] if self.answers_attr in jline else []
+                id = None
+                if self.id_attr in jline:
+                    id = jline[self.id_attr]
+                print(self._process_question(question), id, answers)
+                data.append(QASample(self._process_question(question), id, answers))
+        self.data = data
 
 class KiltCsvQASrc(CsvQASrc):
     def __init__(
@@ -271,7 +301,7 @@ class CsvCtxSrc(RetrieverData):
         super().load_data()
         logger.info("Reading file %s", self.file)
         with open(self.file) as ifile:
-            reader = csv.reader(ifile, delimiter="\t")
+            reader = csv.reader(ifile, delimiter=",")
             for row in reader:
                 # for row in ifile:
                 # row = row.strip().split("\t")

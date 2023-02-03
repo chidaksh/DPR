@@ -70,18 +70,20 @@ def generate_question_vectors(
                 batch_tensors = [q for q in batch_questions]
             else:
                 batch_tensors = [tensorizer.text_to_tensor(q) for q in batch_questions]
-
+            print(query_token)
+            print(len(batch_tensors))
+            print(batch_tensors[0])
             # TODO: this only works for Wav2vec pipeline but will crash the regular text pipeline
-            max_vector_len = max(q_t.size(1) for q_t in batch_tensors)
-            min_vector_len = min(q_t.size(1) for q_t in batch_tensors)
+            max_vector_len = max(q_t.size(0) for q_t in batch_tensors)
+            min_vector_len = min(q_t.size(0) for q_t in batch_tensors)
 
             if max_vector_len != min_vector_len:
                 # TODO: _pad_to_len move to utils
                 from dpr.models.reader import _pad_to_len
                 batch_tensors = [_pad_to_len(q.squeeze(0), 0, max_vector_len) for q in batch_tensors]
 
-            q_ids_batch = torch.stack(batch_tensors, dim=0).cuda()
-            q_seg_batch = torch.zeros_like(q_ids_batch).cuda()
+            q_ids_batch = torch.stack(batch_tensors, dim=0)#.cuda()
+            q_seg_batch = torch.zeros_like(q_ids_batch)#.cuda()
             q_attn_mask = tensorizer.get_attn_mask(q_ids_batch)
 
             if selector:

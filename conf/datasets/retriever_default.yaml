@@ -7,11 +7,11 @@ nq_test:
 
 nq_train:
   _target_: dpr.data.retriever_data.CsvQASrc
-  file: data.retriever.qas.nq-train
+  file: ../../../../train.csv
 
 nq_dev:
-  _target_: dpr.data.retriever_data.CsvQASrc
-  file: data.retriever.qas.nq-dev
+  _target_: dpr.data.retriever_data.JsonQASrc
+  file: ../../../../test.csv
 
 trivia_test:
   _target_: dpr.data.retriever_data.CsvQASrc
