@@ -180,7 +180,7 @@ class JsonQASrc(QASrc):
                 id = None
                 if self.id_attr in jline:
                     id = jline[self.id_attr]
-                print(self._process_question(question), id, answers)
+                # print(self._process_question(question), id, answers)
                 data.append(QASample(self._process_question(question), id, answers))
         self.data = data
 

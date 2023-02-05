@@ -4,7 +4,7 @@
 encoder_model_type: hf_bert
 
 # HuggingFace's config name for model initialization
-pretrained_model_cfg: google/bert_uncased_L-2_H-128_A-2
+pretrained_model_cfg: google/bert_uncased_L-4_H-512_A-8
 
 # Some encoders need to be initialized from a file
 pretrained_file:

@@ -70,9 +70,9 @@ def generate_question_vectors(
                 batch_tensors = [q for q in batch_questions]
             else:
                 batch_tensors = [tensorizer.text_to_tensor(q) for q in batch_questions]
-            print(query_token)
-            print(len(batch_tensors))
-            print(batch_tensors[0])
+            # print(query_token)
+            # print(len(batch_tensors))
+            # print(batch_tensors[0])
             # TODO: this only works for Wav2vec pipeline but will crash the regular text pipeline
             max_vector_len = max(q_t.size(0) for q_t in batch_tensors)
             min_vector_len = min(q_t.size(0) for q_t in batch_tensors)
