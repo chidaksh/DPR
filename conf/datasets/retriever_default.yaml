@@ -1,8 +1,8 @@
 # @package _group_
 
 nq_test:
-  _target_: dpr.data.retriever_data.CsvQASrc
-  file: data.retriever.qas.nq-test
+  _target_: dpr.data.retriever_data.JsonQASrc
+  file: ../../../../test.csv
   #query_special_suffix: '?'
 
 nq_train:

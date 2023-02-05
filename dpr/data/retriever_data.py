@@ -4,7 +4,8 @@ import json
 import logging
 import pickle
 from typing import Dict, List
-
+import sys
+csv.field_size_limit(sys.maxsize)
 import hydra
 import jsonlines
 import torch
